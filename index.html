@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Notes | Midnight Creative Journal</title>
+    <!-- Google Fonts: Outfit, Comfortaa & Caveat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Comfortaa:wght@400;700;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons via CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="dark-theme">
+    <div id="app" class="glass-container">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i data-lucide="sparkles" class="logo-icon"></i>
+                    <h1>Aura Notes</h1>
+                </div>
+            </div>
+
+            <!-- Tasks & Tracking -->
+            <div class="tracking-section">
+                <div class="section-header">
+                    <h3>Tasks & Tracking</h3>
+                </div>
+                <!-- To-Do Quick List -->
+                <div class="todo-mini">
+                    <input type="text" id="todo-input" placeholder="+ Add a quick task...">
+                    <ul id="todo-list">
+                        <!-- Mini tasks rendered here -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="notebook-section">
+                <div class="section-header">
+                    <h3>Notebooks</h3>
+                </div>
+                <nav id="notebook-list">
+                    <!-- Notebooks rendered here -->
+                </nav>
+            </div>
+
+            <div class="notes-section">
+                <div class="section-header">
+                    <h3>Notes Listing</h3>
+                    <button id="new-note-btn" class="icon-btn sm" title="New Note">
+                        <i data-lucide="plus"></i>
+                    </button>
+                </div>
+                <div class="search-box">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="note-search" placeholder="Search notes...">
+                </div>
+                <nav id="note-list">
+                    <!-- Notes rendered here -->
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Editor Area -->
+        <main id="editor-container">
+            <header id="editor-header">
+                <div class="note-meta">
+                    <input type="text" id="note-title" placeholder="Untitled Note">
+                    <p id="note-date">April 01, 2026</p>
+                </div>
+                <div class="toolbar">
+                    <div class="text-tools">
+                        <button class="tool-btn sm" id="bold-btn" title="Bold (Ctrl+B)">
+                            <i data-lucide="bold"></i>
+                        </button>
+                        <button class="tool-btn sm" id="bullet-btn" title="Bullets">
+                            <i data-lucide="list"></i>
+                        </button>
+                        <button class="tool-btn sm" id="tick-btn" title="Tick / Checkbox">
+                            <i data-lucide="check-square"></i>
+                        </button>
+                    </div>
+
+                    <div class="style-picker" id="style-picker">
+                        <button class="style-btn blank-opt active" data-style="blank" title="Blank Page"></button>
+                        <button class="style-btn lined-opt" data-style="lined" title="Lined Page"></button>
+                        <button class="style-btn white-opt" data-style="white" title="White Page"></button>
+                        <button class="style-btn yellow-opt" data-style="yellow" title="Yellow Page"></button>
+                    </div>
+
+                    <div class="mode-toggle">
+                        <button class="mode-btn active" id="text-mode-btn">
+                            <i data-lucide="type"></i> Text
+                        </button>
+                        <button class="mode-btn" id="draw-mode-btn">
+                            <i data-lucide="pen-tool"></i> Draw
+                        </button>
+                    </div>
+
+                    <button class="tool-btn" id="highlight-btn" title="Highlight (Ctrl+H)">
+                        <i data-lucide="highlighter"></i>
+                    </button>
+                    <button class="tool-btn" id="save-btn" title="Save (Ctrl+S)">
+                        <i data-lucide="save"></i>
+                    </button>
+                    <button class="tool-btn delete" id="delete-btn" title="Delete">
+                        <i data-lucide="trash-2"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="editor-wrapper">
+                <div id="editor" contenteditable="true" spellcheck="true" placeholder="Start typing your thoughts..."></div>
+                <canvas id="draw-canvas"></canvas>
+                
+                <!-- Drawing Toolbar -->
+                <div id="draw-toolbar">
+                    <div class="draw-tools">
+                        <button class="draw-tool-btn active" data-tool="pen" title="Pen"><i data-lucide="pen"></i></button>
+                        <button class="draw-tool-btn" data-tool="eraser" title="Eraser"><i data-lucide="eraser"></i></button>
+                        <button class="draw-tool-btn" data-tool="rect" title="Rectangle"><i data-lucide="square"></i></button>
+                        <button class="draw-tool-btn" data-tool="circle" title="Circle"><i data-lucide="circle"></i></button>
+                        <button class="draw-tool-btn" data-tool="triangle" title="Triangle"><i data-lucide="triangle"></i></button>
+                        <button class="draw-tool-btn" data-tool="star" title="Star"><i data-lucide="star"></i></button>
+                    </div>
+                    <div class="color-palette">
+                        <div class="color-swatch active" style="background: #ff0055;" data-color="#ff0055"></div>
+                        <div class="color-swatch" style="background: #ff8fa3;" data-color="#ff8fa3"></div>
+                        <div class="color-swatch" style="background: #7000ff;" data-color="#7000ff"></div>
+                        <div class="color-swatch" style="background: #40c4ff;" data-color="#40c4ff"></div>
+                        <div class="color-swatch" style="background: #69f0ae;" data-color="#69f0ae"></div>
+                        <div class="color-swatch" style="background: #ffeb3b;" data-color="#ffeb3b"></div>
+                        <div class="color-swatch" style="background: #ffa1b2;" data-color="#ffa1b2"></div>
+                        <div class="color-swatch" style="background: #f8f9fa;" data-color="#f8f9fa"></div>
+                        <div class="color-swatch" style="background: #4a3a4a;" data-color="#4a3a4a"></div>
+                    </div>
+                    <div class="brush-controls">
+                        <input type="range" id="brush-size" min="1" max="40" value="3">
+                        <button class="tool-btn sm" id="clear-draw-btn" title="Clear Canvas">
+                            <i data-lucide="refresh-ccw"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast">Note saved successfully!</div>
+
+    <script src="app.js"></script>
+    <script>
+      lucide.createIcons();
+      if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('./sw.js').then(reg => {
+                  console.log('App ready for offline use.');
+              });
+          });
+      }
+    </script>
+</body>
+</html>

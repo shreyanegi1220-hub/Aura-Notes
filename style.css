@@ -1,0 +1,164 @@
+:root {
+    /* Color Palette - Dramatic Midnight Rose */
+    --accent: #ff0055; /* Neon Magenta */
+    --accent-light: #ff5e95;
+    --accent-dark: #cc0044;
+    --background: #0f0a0c; /* Midnight Black-Plum */
+    --surface: rgba(20, 15, 20, 0.7); /* Deep Glass */
+    --surface-hover: rgba(40, 30, 40, 0.8);
+    --text-primary: #f8f9fa; /* Crisp White */
+    --text-secondary: #ffb8d1; /* Soft Pink Text */
+    --border: rgba(255, 0, 85, 0.3);
+    --highlight-yellow: rgba(255, 235, 59, 0.3);
+    
+    /* Dramatic Midnight Gradient */
+    --aura-gradient: linear-gradient(135deg, #ff0055 0%, #7000ff 100%);
+    --mesh-gradient: radial-gradient(at 0% 0%, hsla(330, 100%, 15%, 1) 0, transparent 50%), 
+                     radial-gradient(at 50% 0%, hsla(280, 100%, 10%, 1) 0, transparent 50%), 
+                     radial-gradient(at 100% 0%, hsla(330, 100%, 20%, 1) 0, transparent 50%), 
+                     radial-gradient(at 0% 50%, hsla(330, 100%, 10%, 1) 0, transparent 50%), 
+                     radial-gradient(at 100% 50%, hsla(280, 100%, 15%, 1) 0, transparent 50%), 
+                     radial-gradient(at 0% 100%, hsla(330, 100%, 15%, 1) 0, transparent 50%), 
+                     radial-gradient(at 50% 100%, hsla(280, 100%, 10%, 1) 0, transparent 50%), 
+                     radial-gradient(at 100% 100%, hsla(330, 100%, 20%, 1) 0, transparent 50%);
+
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin:0; padding:0; box-sizing: border-box; }
+body { font-family: 'Outfit', sans-serif; background: var(--background); color: var(--text-primary); min-height: 100vh; overflow: hidden; position: relative; }
+
+body::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: var(--mesh-gradient); background-size: 200% 200%;
+    animation: meshFlow 15s ease-in-out infinite alternate; z-index: -1;
+    filter: blur(40px);
+}
+@keyframes meshFlow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+
+#app { display: flex; width: 100vw; height: 100vh; padding: 24px; gap: 24px; }
+.glass-container { background: var(--surface); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); border: 1px solid var(--border); border-radius: 40px; box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 85, 0.1); }
+
+/* Sidebar Dashboard */
+#sidebar {
+    width: 340px; height: 100%; display: flex; flex-direction: column; gap: 20px;
+    border-right: 1px solid var(--border); padding: 40px 0 40px 40px;
+    font-family: 'Comfortaa', cursive; font-weight: 700;
+}
+.sidebar-header { margin-bottom: 32px; }
+.logo h1 { font-size: 1.75rem; background: var(--aura-gradient); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 5px rgba(255,0,85,0.4)); }
+.logo-icon { width: 32px; color: var(--accent); filter: drop-shadow(0 0 10px var(--accent)); }
+
+.notebook-item {
+    display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-radius: 100px;
+    cursor: pointer; font-size: 1.15rem; transition: var(--transition-normal);
+    background: rgba(255,255,255,0.03); margin-bottom: 12px; font-weight: 900;
+}
+.notebook-item.active { background: var(--aura-gradient); color: white; border: none; box-shadow: 0 15px 30px rgba(255,0,85,0.3); }
+.notebook-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; }
+
+.section-header h3 { font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--accent-light); margin-bottom: 12px; text-shadow: 0 0 10px rgba(255, 0, 85, 0.4); }
+
+/* Tasks & Tracking Section */
+.tracking-section { margin-bottom: 24px; padding-right: 24px; }
+.todo-mini { background: rgba(255,255,255,0.03); border-radius: 16px; padding: 12px; border: 1px solid var(--border); }
+#todo-input { width: 100%; background: transparent; border: none; outline: none; padding: 4px; color: white; font-size: 0.85rem; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+#todo-list { list-style: none; font-family: 'Outfit', sans-serif; font-size: 0.8rem; overflow-y: auto; max-height: 120px; }
+.todo-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--text-secondary); transition: 0.2s; position: relative; padding-right: 24px; }
+.todo-item:hover { color: white; }
+.todo-item.done span { text-decoration: line-through; opacity: 0.5; }
+.todo-item input { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+.todo-item .delete-task { position: absolute; right: 0; top: 50%; transform: translateY(-50%); opacity: 0; cursor: pointer; color: var(--accent-dark); transition: 0.2s; visibility: hidden; }
+.todo-item:hover .delete-task { opacity: 0.8; visibility: visible; }
+.todo-item .delete-task:hover { opacity: 1; transform: translateY(-50%) scale(1.2); }
+
+#note-list { flex: 1; overflow-y: auto; padding-right: 16px; }
+.note-item { padding: 20px; border-radius: 20px; cursor: pointer; margin-bottom: 12px; transition: 0.3s; background: rgba(255,255,255,0.02); }
+.note-item:hover { background: rgba(255,255,255,0.05); transform: translateX(5px); }
+.note-item.active { background: rgba(255,0,85,0.15); border: 1px solid var(--accent); box-shadow: 0 0 20px rgba(255,0,85,0.1); }
+.note-item h4 { color: white; font-size: 1.05rem; }
+.note-item p { color: var(--text-secondary); opacity: 0.7; }
+
+/* Editor Area */
+#editor-container { flex: 1; height: 100%; display: flex; flex-direction: column; padding: 40px; }
+#editor-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+#note-title { font-size: 2.25rem; font-weight: 900; border: none; background: transparent; outline: none; font-family: 'Comfortaa', cursive; color: white; text-shadow: 0 0 15px rgba(255,0,85,0.2); }
+
+.toolbar { display: flex; align-items: center; gap: 16px; }
+.text-tools { display: flex; gap: 8px; border-right: 1.5px solid var(--border); padding-right: 16px; }
+.style-picker { display: flex; gap: 10px; background: rgba(0,0,0,0.3); padding: 6px 12px; border-radius: 100px; border: 1px solid var(--border); }
+.style-btn { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2.5px solid rgba(255,255,255,0.2); transition: 0.2s; }
+.style-btn.active { border-color: var(--accent); box-shadow: 0 0 15px var(--accent); transform: scale(1.1); }
+.blank-opt { background: #feeaf1; }
+.white-opt { background: #ffffff; }
+.yellow-opt { background: #fffde7; }
+.lined-opt { background: repeating-linear-gradient(#fff, #fff 4px, #ff0055 5px); }
+
+.tool-btn, .icon-btn { padding: 12px; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: white; cursor: pointer; transition: 0.2s; }
+.tool-btn:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,0,85,0.4); }
+
+.mode-toggle { display: flex; background: rgba(0,0,0,0.3); padding: 6px; border-radius: 16px; border: 1px solid var(--border); }
+.mode-btn { padding: 10px 20px; border: none; background: transparent; cursor: pointer; border-radius: 12px; font-weight: 800; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; }
+.mode-btn.active { background: var(--aura-gradient); color: white; box-shadow: 0 5px 15px rgba(255,0,85,0.4); }
+
+/* Writing Canvas Overlay */
+.editor-wrapper { flex: 1; position: relative; overflow: hidden; border-radius: 32px; border: 1px solid var(--border); background: rgba(0,0,0,0.2); box-shadow: inset 0 0 50px rgba(0,0,0,0.5); }
+#editor { 
+    flex: 1; height: 100%; padding: 40px 50px; outline: none; 
+    font-size: 1.15rem; line-height: 1.8; z-index: 2; 
+    overflow-y: auto; color: #fff; text-shadow: 0 0 1px rgba(255,255,255,0.5); 
+}
+/* Checklist styling */
+.checkbox-item { display: flex; align-items: start; gap: 10px; margin-bottom: 4px; }
+.checkbox-item input { margin-top: 6px; cursor: pointer; accent-color: var(--accent); }
+#draw-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 101%; z-index: 5; pointer-events: none; display: none; }
+#draw-canvas.active { display: block; pointer-events: all; }
+
+/* Themes in Dark Mode */
+.editor-wrapper.white { background: #fff !important; }
+.editor-wrapper.white #editor { color: #111; text-shadow: none; }
+.editor-wrapper.yellow { background: #fff8e1 !important; }
+.editor-wrapper.yellow #editor { color: #111; text-shadow: none; }
+.editor-wrapper.lined { 
+    background-color: #fcfdfe !important; /* Pale Whiteish */
+    background-image: linear-gradient(rgba(255, 0, 85, 0.15) 1.5px, transparent 1.5px); 
+    background-size: 100% 32px; 
+    background-attachment: local;
+}
+.editor-wrapper.lined #editor { 
+    color: #1a1a1a; 
+    text-shadow: none;
+    line-height: 32px !important; /* PRECISE LINE ALIGNMENT */
+    padding-top: 42px !important; /* OFFSET TO START ON FIRST LINE */
+}
+.editor-wrapper.lined #editor ul, .editor-wrapper.lined #editor ol {
+    padding-left: 48px;
+    margin: 0;
+}
+.editor-wrapper.lined #editor li {
+    line-height: 32px; /* Ensure 1:1 on lines */
+}
+
+/* Enhanced Drawing Toolbar */
+#draw-toolbar {
+    display: none; position: fixed; bottom: 60px; left: 55%; transform: translateX(-50%);
+    background: rgba(15, 10, 15, 0.95); backdrop-filter: blur(16px); padding: 16px 32px;
+    border-radius: 100px; box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,0,85,0.2); z-index: 1000;
+    gap: 24px; align-items: center; border: 1.5px solid var(--accent);
+}
+#draw-toolbar.active { display: flex; }
+
+.draw-tools { display: flex; gap: 12px; padding-right: 20px; border-right: 1px solid var(--border); }
+.draw-tool-btn { padding: 10px; border-radius: 14px; border: 1.5px solid transparent; background: transparent; cursor: pointer; transition: 0.2s; color: var(--text-secondary); }
+.draw-tool-btn:hover { background: rgba(255,0,85,0.1); color: var(--accent); }
+.draw-tool-btn.active { background: var(--accent); color: white; box-shadow: 0 0 15px var(--accent); }
+
+.color-palette { display: flex; gap: 10px; }
+.color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2.5px solid rgba(255,255,255,0.3); transition: 0.3s; }
+.color-swatch.active { transform: scale(1.25); border-color: white; box-shadow: 0 0 15px currentColor; }
+
+.brush-controls { display: flex; align-items: center; gap: 16px; padding-left: 20px; border-left: 1px solid var(--border); }
+
+.toast { position: fixed; bottom: 40px; right: 40px; background: var(--aura-gradient); color: white; padding: 14px 28px; border-radius: 16px; transform: translateY(150px); transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 2000; font-weight: 900; box-shadow: 0 10px 30px rgba(255,0,85,0.3); }
+.toast.show { transform: translateY(0); }
