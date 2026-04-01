@@ -27,6 +27,7 @@ const el = {
     todoList: document.getElementById('todo-list'),
     todoInput: document.getElementById('todo-input'),
     newNoteBtn: document.getElementById('new-note-btn'),
+    newNoteBtn: document.getElementById('new-note-btn'),
     noteTitle: document.getElementById('note-title'),
     noteDate: document.getElementById('note-date'),
     editor: document.getElementById('editor'),

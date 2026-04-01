@@ -95,8 +95,24 @@ body::before {
 .yellow-opt { background: #fffde7; }
 .lined-opt { background: repeating-linear-gradient(#fff, #fff 4px, #ff0055 5px); }
 
-.tool-btn, .icon-btn { padding: 12px; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: white; cursor: pointer; transition: 0.2s; }
-.tool-btn:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,0,85,0.4); }
+.tool-btn, .icon-btn { padding: 12px; border-radius: 16px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: white; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+.tool-btn:hover, .icon-btn:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255,0,85,0.4); }
+
+.glow-btn {
+    background: #ff0055 !important;
+    border: none !important;
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.6), 0 0 40px rgba(255, 0, 85, 0.2);
+    color: white !important;
+    width: 50px;
+    height: 50px;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.glow-btn:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 0 30px rgba(255, 0, 85, 0.8); }
 
 .mode-toggle { display: flex; background: rgba(0,0,0,0.3); padding: 6px; border-radius: 16px; border: 1px solid var(--border); }
 .mode-btn { padding: 10px 20px; border: none; background: transparent; cursor: pointer; border-radius: 12px; font-weight: 800; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; }
